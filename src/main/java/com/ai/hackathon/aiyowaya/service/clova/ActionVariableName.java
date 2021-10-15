@@ -1,5 +1,7 @@
 package com.ai.hackathon.aiyowaya.service.clova;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatBotRequest {
+public class ActionVariableName {
+    List<String> args;
 
-    ActionMethod actionMethod;
-
-    UserInfo userInfo;
+    String variableName;
 }

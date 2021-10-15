@@ -1,6 +1,8 @@
 package com.ai.hackathon.aiyowaya.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import com.ai.hackathon.aiyowaya.service.clova.ChatBotData;
 import com.ai.hackathon.aiyowaya.service.clova.ChatBotDto;
 import com.ai.hackathon.aiyowaya.service.clova.ChatBotRequest;
 import com.ai.hackathon.aiyowaya.service.clova.UserVariableResponse;
+import com.ai.hackathon.aiyowaya.service.clova.UserVariablesName;
 
 @RestController
 public class OaController {
@@ -23,19 +26,40 @@ public class OaController {
 
         System.out.println(request);
 
+        final List<ChatBotData> chatBotData = request.getActionMethod()
+                                                     .getMethods()
+                                                     .stream()
+                                                     .map(method -> ChatBotData.builder()
+                                                                               .variableName(method.getVariableName())
+                                                                               .value(method.getVariableName() + "value")
+                                                                               .build())
+                                                     .collect(Collectors.toList());
+
+        String definedUserName;
+        String definedUserValue;
+        String definedUserType;
+        final Map<String, UserVariablesName> userVariablesName =
+                request.getUserInfo().getUserVariables().getUserVariablesName();
+        if (userVariablesName.containsKey("bank")) {
+            definedUserName = "bank";
+            definedUserValue = userVariablesName.get(definedUserName).getValue();
+            definedUserType = userVariablesName.get(definedUserName).getTyp();
+        } else {
+            definedUserName = "沒有對應的名字";
+            definedUserValue = "沒有對應的值";
+            definedUserType = "沒有對應的型態";
+        }
+
         return ChatBotDto.builder()
-                .data(List.of(ChatBotData.builder()
-                                         .variableName("Part that pertains to variable name")
-                                         .value("Decides to which value the variable pertaining to variableName will be substituted")
-                                         .build()))
-                  .userVariable(
-                          List.of(UserVariableResponse.builder()
-                                                      .name("User variable name")
-                                                      .value("Value to be saved in user variables")
-                                                      .type("Type of user variable")
-                                                      .action("Specifies action")
-                                                      .valueType("Type of value to be saved")
-                                                      .build()))
+                         .data(chatBotData)
+                         .userVariable(
+                                 List.of(UserVariableResponse.builder()
+                                                             .name(definedUserName)
+                                                             .value(definedUserValue)
+                                                             .type(definedUserType)
+                                                             .action("Specifies action")
+                                                             .valueType("TEXT")
+                                                             .build()))
                          .build();
     }
 }

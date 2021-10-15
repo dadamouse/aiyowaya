@@ -1,6 +1,9 @@
 package com.ai.hackathon.aiyowaya.service.clova;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserVariables {
 
-    @JsonProperty("User variable name")
-    UserVariablesName userVariablesName;
+    Map<String, UserVariablesName> userVariablesName = new LinkedHashMap<>();
+
+    @JsonAnySetter
+    void setVariable(String key, UserVariablesName value) {
+        userVariablesName.put(key, value);
+    }
 }
