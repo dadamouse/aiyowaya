@@ -1,6 +1,7 @@
 package com.ai.hackathon.aiyowaya.service.oalist;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +30,8 @@ public class OaListService {
 
         final List<OaListEntity> oaListEntities = oaListRepository.findAllByIntention(
                 request.getActionMethod().getName());
+
+        Collections.shuffle(oaListEntities);
 
         int i = 1;
         List<ChatBotData> chatBotDataList = new ArrayList<>();
