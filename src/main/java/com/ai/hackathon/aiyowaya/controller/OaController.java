@@ -13,9 +13,16 @@ import com.ai.hackathon.aiyowaya.service.clova.ChatBotDto;
 import com.ai.hackathon.aiyowaya.service.clova.ChatBotRequest;
 import com.ai.hackathon.aiyowaya.service.clova.UserVariableResponse;
 import com.ai.hackathon.aiyowaya.service.clova.UserVariablesName;
+import com.ai.hackathon.aiyowaya.service.oalist.OaListService;
 
 @RestController
 public class OaController {
+
+    final private OaListService oaListService;
+
+    public OaController(OaListService oaListService) {
+        this.oaListService = oaListService;
+    }
 
     /**
      * @Link https://guide.ncloud-docs.com/docs/en/chatbot-chatbot-3-4
@@ -26,40 +33,6 @@ public class OaController {
 
         System.out.println(request);
 
-        final List<ChatBotData> chatBotData = request.getActionMethod()
-                                                     .getMethods()
-                                                     .stream()
-                                                     .map(method -> ChatBotData.builder()
-                                                                               .variableName(method.getVariableName())
-                                                                               .value(method.getVariableName() + "value")
-                                                                               .build())
-                                                     .collect(Collectors.toList());
-
-        String definedUserName;
-        String definedUserValue;
-        String definedUserType;
-        final Map<String, UserVariablesName> userVariablesName =
-                request.getUserInfo().getUserVariables().getUserVariablesName();
-        if (userVariablesName.containsKey("bank")) {
-            definedUserName = "bank";
-            definedUserValue = userVariablesName.get(definedUserName).getValue();
-            definedUserType = userVariablesName.get(definedUserName).getTyp();
-        } else {
-            definedUserName = "沒有對應的名字";
-            definedUserValue = "沒有對應的值";
-            definedUserType = "沒有對應的型態";
-        }
-
-        return ChatBotDto.builder()
-                         .data(chatBotData)
-                         .userVariable(
-                                 List.of(UserVariableResponse.builder()
-                                                             .name(definedUserName)
-                                                             .value(definedUserValue)
-                                                             .type(definedUserType)
-                                                             .action("Specifies action")
-                                                             .valueType("TEXT")
-                                                             .build()))
-                         .build();
+        return this.oaListService.findIntentOa(request);
     }
 }
