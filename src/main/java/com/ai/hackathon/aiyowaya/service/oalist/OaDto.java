@@ -1,5 +1,7 @@
 package com.ai.hackathon.aiyowaya.service.oalist;
 
+import org.springframework.context.annotation.Bean;
+
 import lombok.Builder;
 import lombok.Data;
 

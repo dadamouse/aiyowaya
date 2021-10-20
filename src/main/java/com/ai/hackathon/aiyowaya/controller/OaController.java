@@ -1,18 +1,12 @@
 package com.ai.hackathon.aiyowaya.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ai.hackathon.aiyowaya.service.clova.ChatBotData;
 import com.ai.hackathon.aiyowaya.service.clova.ChatBotDto;
 import com.ai.hackathon.aiyowaya.service.clova.ChatBotRequest;
-import com.ai.hackathon.aiyowaya.service.clova.UserVariableResponse;
-import com.ai.hackathon.aiyowaya.service.clova.UserVariablesName;
 import com.ai.hackathon.aiyowaya.service.oalist.OaListService;
 
 @RestController

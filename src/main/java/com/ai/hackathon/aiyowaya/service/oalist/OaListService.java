@@ -42,14 +42,22 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("oa_id" + i)
+                               .variableName("oaid" + i)
                                .value("https://line.me/R/ti/p/" + entity.getOaId())
                                .build()
             );
+
+            String iconImage = "";
+            if ("ico_premium" == entity.getIcon()) {
+                iconImage = "https://clovachatbot.ncloud.com/i35b518732a5bd-a6b2-4eec-8bb3-f5617f0addf6";
+            } else if ("ico_certified" == entity.getIcon()) {
+                iconImage = "https://clovachatbot.ncloud.com/i659518339d685-8670-40a8-8c80-b8cd15263b81";
+            }
+
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("icon" + i)
-                               .value(entity.getIcon())
+                               .value(iconImage)
                                .build()
             );
             chatBotDataList.add(
