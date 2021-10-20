@@ -47,4 +47,12 @@ public class OaListEntity {
     @Basic
     @Column(name = "intention", nullable = false)
     private String intention;
+
+    @Basic
+    @Column(name = "bg", nullable = false)
+    private String bg;
+
+    @Basic
+    @Column(name = "ad")
+    private String ad;
 }

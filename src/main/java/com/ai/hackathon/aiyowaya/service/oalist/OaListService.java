@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -47,19 +45,15 @@ public class OaListService {
                                .build()
             );
 
-            String iconImage = "";
-            if ("ico_premium" == entity.getIcon()) {
-                iconImage = "https://clovachatbot.ncloud.com/i35b518732a5bd-a6b2-4eec-8bb3-f5617f0addf6";
-            } else if ("ico_certified" == entity.getIcon()) {
-                iconImage = "https://clovachatbot.ncloud.com/i659518339d685-8670-40a8-8c80-b8cd15263b81";
-            }
+
 
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("icon" + i)
-                               .value(iconImage)
+                               .value(entity.getIcon())
                                .build()
             );
+
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("name" + i)
@@ -72,10 +66,25 @@ public class OaListService {
                                .value(entity.getFriends().toString())
                                .build()
             );
+
+            String titleImage = "";
+            if (entity.getTitle().equals("ico_premium")) {
+                titleImage = "https://clovachatbot.ncloud.com/i35b518732a5bd-a6b2-4eec-8bb3-f5617f0addf6";
+            } else if (entity.getTitle().equals("ico_certified")) {
+                titleImage = "https://clovachatbot.ncloud.com/i659518339d685-8670-40a8-8c80-b8cd15263b81";
+            }
+
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("title" + i)
-                               .value(entity.getTitle())
+                               .value(titleImage)
+                               .build()
+            );
+
+            chatBotDataList.add(
+                    ChatBotData.builder()
+                               .variableName("bg" + i)
+                               .value(entity.getBg())
                                .build()
             );
             i++;
@@ -87,6 +96,8 @@ public class OaListService {
         final Map<String, UserVariablesName> userVariablesName =
                 request.getUserInfo().getUserVariables().getUserVariablesName();
 
+        List<UserVariableResponse> userVariable = new ArrayList();
+
         if (userVariablesName.containsKey("intent")) {
             if (userVariablesName.get("intent").getValue().equals("bank")) {
                 definedUserName = "intent";
@@ -97,23 +108,19 @@ public class OaListService {
                 definedUserValue = "沒有對應的值";
                 definedUserType = "沒有對應的型態";
             }
-        } else {
-            definedUserName = "沒有對應的名字";
-            definedUserValue = "沒有對應的值";
-            definedUserType = "沒有對應的型態";
+
+            userVariable = List.of(UserVariableResponse.builder()
+                                                       .name(definedUserName)
+                                                       .value(definedUserValue)
+                                                       .type(definedUserType)
+                                                       .action("Specifies action")
+                                                       .valueType("TEXT")
+                                                       .build());
         }
 
         return ChatBotDto.builder()
                          .data(chatBotDataList)
-                         .userVariable(
-                                 List.of(UserVariableResponse.builder()
-                                                             .name(definedUserName)
-                                                             .value(definedUserValue)
-                                                             .type(definedUserType)
-                                                             .action("Specifies action")
-                                                             .valueType("TEXT")
-                                                             .build()))
+                         .userVariable(userVariable)
                          .build();
-
     }
 }
