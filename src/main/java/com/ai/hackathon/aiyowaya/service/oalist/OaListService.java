@@ -39,7 +39,7 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("oaid" + i)
+                               .variableName("oa" + i)
                                .value("https://line.me/R/ti/p/" + entity.getOaId())
                                .build()
             );
