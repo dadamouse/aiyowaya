@@ -37,10 +37,14 @@ public class OaListService {
                 break;
             }
 
+            String image = "https://clovachatbot.ncloud.com/i35c568331qb3f-e9ee-4cb5-9621-16a7e4fcb198";
+            if (!entity.getBg().isEmpty()) {
+                image = entity.getBg();
+            }
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("bg" + i)
-                               .value(entity.getBg())
+                               .value(image)
                                .build()
             );
 
