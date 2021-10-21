@@ -13,6 +13,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatBotDto {
     List<ChatBotData> data;
-
-    List<UserVariableResponse> userVariable;
 }
