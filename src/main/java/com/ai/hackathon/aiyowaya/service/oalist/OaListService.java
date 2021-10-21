@@ -119,7 +119,6 @@ public class OaListService {
 
         return ChatBotDto.builder()
                          .data(chatBotDataList)
-                         .userVariable(userVariable)
                          .build();
     }
 }
