@@ -56,10 +56,14 @@ public class OaListService {
                                                        .build());
         }
 
+        System.out.println("search key" + searchKey);
 
-        final List<OaListEntity> oaListEntities = oaListRepository.findAllByIntention(searchKey);
+
+        final List<OaListEntity> oaListEntities = oaListRepository.findAllByIntention("銀行 - 換匯資訊");
 
         Collections.shuffle(oaListEntities);
+
+        System.out.println(oaListEntities);
 
         int i = 1;
         List<ChatBotData> chatBotDataList = new ArrayList<>();
