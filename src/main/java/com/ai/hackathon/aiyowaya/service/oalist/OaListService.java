@@ -26,8 +26,38 @@ public class OaListService {
 
     public ChatBotDto findIntentOa(ChatBotRequest request) {
 
-        final List<OaListEntity> oaListEntities = oaListRepository.findAllByIntention(
-                request.getActionMethod().getName());
+        String definedUserName;
+        String definedUserValue;
+        String definedUserType;
+        String searchKey = "no data";
+        final Map<String, UserVariablesName> userVariablesName =
+                request.getUserInfo().getUserVariables().getUserVariablesName();
+
+        List<UserVariableResponse> userVariable = new ArrayList();
+
+        if (userVariablesName.containsKey("intent")) {
+            if (userVariablesName.get("intent").getValue().equals("bank")) {
+                searchKey = "銀行 - 換匯資訊";
+                definedUserName = "intent";
+                definedUserValue = "bank";
+                definedUserType = userVariablesName.get(definedUserName).getTyp();
+            } else {
+                definedUserName = "沒有對應的名字";
+                definedUserValue = "沒有對應的值";
+                definedUserType = "沒有對應的型態";
+            }
+
+            userVariable = List.of(UserVariableResponse.builder()
+                                                       .name(definedUserName)
+                                                       .value(definedUserValue)
+                                                       .type(definedUserType)
+                                                       .action("Specifies action")
+                                                       .valueType("TEXT")
+                                                       .build());
+        }
+
+
+        final List<OaListEntity> oaListEntities = oaListRepository.findAllByIntention(searchKey);
 
         Collections.shuffle(oaListEntities);
 
@@ -40,7 +70,7 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("oaid" + i)
+                               .variableName("id" + i)
                                .value("https://line.me/R/ti/p/" + entity.getOaId())
                                .build()
             );
@@ -88,34 +118,6 @@ public class OaListService {
                                .build()
             );
             i++;
-        }
-
-        String definedUserName;
-        String definedUserValue;
-        String definedUserType;
-        final Map<String, UserVariablesName> userVariablesName =
-                request.getUserInfo().getUserVariables().getUserVariablesName();
-
-        List<UserVariableResponse> userVariable = new ArrayList();
-
-        if (userVariablesName.containsKey("intent")) {
-            if (userVariablesName.get("intent").getValue().equals("bank")) {
-                definedUserName = "intent";
-                definedUserValue = "bank";
-                definedUserType = userVariablesName.get(definedUserName).getTyp();
-            } else {
-                definedUserName = "沒有對應的名字";
-                definedUserValue = "沒有對應的值";
-                definedUserType = "沒有對應的型態";
-            }
-
-            userVariable = List.of(UserVariableResponse.builder()
-                                                       .name(definedUserName)
-                                                       .value(definedUserValue)
-                                                       .type(definedUserType)
-                                                       .action("Specifies action")
-                                                       .valueType("TEXT")
-                                                       .build());
         }
 
         return ChatBotDto.builder()
