@@ -39,30 +39,15 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("id" + i)
-                               .value("https://line.me/R/ti/p/" + entity.getOaId())
+                               .variableName("bg" + i)
+                               .value(entity.getBg())
                                .build()
             );
-
-
 
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("icon" + i)
                                .value(entity.getIcon())
-                               .build()
-            );
-
-            chatBotDataList.add(
-                    ChatBotData.builder()
-                               .variableName("name" + i)
-                               .value(entity.getName())
-                               .build()
-            );
-            chatBotDataList.add(
-                    ChatBotData.builder()
-                               .variableName("friends" + i)
-                               .value(entity.getFriends().toString())
                                .build()
             );
 
@@ -82,10 +67,25 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("bg" + i)
-                               .value(entity.getBg())
+                               .variableName("name" + i)
+                               .value(entity.getName())
                                .build()
             );
+
+            chatBotDataList.add(
+                    ChatBotData.builder()
+                               .variableName("friends" + i)
+                               .value(entity.getFriends().toString())
+                               .build()
+            );
+
+            chatBotDataList.add(
+                    ChatBotData.builder()
+                               .variableName("id" + i)
+                               .value("https://line.me/R/ti/p/" + entity.getOaId())
+                               .build()
+            );
+
             i++;
         }
 
