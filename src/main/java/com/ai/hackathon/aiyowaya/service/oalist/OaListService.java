@@ -74,7 +74,7 @@ public class OaListService {
 
             chatBotDataList.add(
                     ChatBotData.builder()
-                               .variableName("friends" + i)
+                               .variableName("friend" + i)
                                .value(entity.getFriends().toString())
                                .build()
             );
