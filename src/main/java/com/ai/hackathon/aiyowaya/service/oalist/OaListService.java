@@ -109,16 +109,17 @@ public class OaListService {
             }
 
             userVariable = List.of(UserVariableResponse.builder()
-                                                       .name(definedUserName)
-                                                       .value(definedUserValue)
-                                                       .type(definedUserType)
-                                                       .action("Specifies action")
+                                                       .name("bank")
+                                                       .value("test")
+                                                       .type("TEXT")
+                                                       .action("EQ")
                                                        .valueType("TEXT")
                                                        .build());
         }
 
         return ChatBotDto.builder()
                          .data(chatBotDataList)
+                         .userVariable(userVariable)
                          .build();
     }
 }
