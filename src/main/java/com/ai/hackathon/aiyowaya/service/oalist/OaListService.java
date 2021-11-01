@@ -72,8 +72,8 @@ public class OaListService {
         } else {
             popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages);
 
-            i = 1;
-            max = 1;
+            i = 3;
+            max = 3;
             popOaEntity(oaAdListEntities, i, max, chatBotDataList, defaultImages);
         }
 
