@@ -29,13 +29,4 @@ public class OaController {
 
         return this.oaListService.findIntentOa(request);
     }
-
-    @PostMapping("/query")
-    public ChatBotDto queryOa(
-            @RequestBody ChatBotRequest request) {
-
-        System.out.println(request);
-
-        return this.oaListService.findIntentOa2(request);
-    }
 }
