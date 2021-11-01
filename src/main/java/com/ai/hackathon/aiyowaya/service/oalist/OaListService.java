@@ -24,16 +24,18 @@ public class OaListService {
 
     public ChatBotDto findIntentOa(ChatBotRequest request) throws Exception {
 
-        String nameType = "銀行 - 換匯資訊";
+        String chooseName;
+        if (null == request.getActionMethod().getName() || request.getActionMethod().getName().isEmpty()) {
+            chooseName = "bank";
+        } else {
+            chooseName = request.getActionMethod().getName();
+        }
+
+        String nameType;
         List<String> defaultImages = new ArrayList<>();
-        switch (request.getActionMethod().getName()) {
-            case "food":
-                nameType = "線上訂餐";
-                defaultImages.add("https://clovachatbot.ncloud.com/i15e5d863ewa24-4a5a-468b-8f87-a113b0e44fc0");
-                defaultImages.add("https://clovachatbot.ncloud.com/ic54598b3co2f8-d6eb-4786-a957-160e3cc0fae5");
-                defaultImages.add("https://clovachatbot.ncloud.com/i255528938q84e-f28e-4256-b449-78b089640391");
-                break;
+        switch (chooseName) {
             case "bank":
+            default:
                 nameType = "銀行 - 換匯資訊";
                 defaultImages.add("https://clovachatbot.ncloud.com/ic5a568934x4ed-01b2-4f11-82c2-eec3be6a95da");
                 defaultImages.add("https://clovachatbot.ncloud.com/i554558f3dlced-d5c3-4e10-bfee-de6c194efbb7");
@@ -44,6 +46,12 @@ public class OaListService {
                 defaultImages.add("https://clovachatbot.ncloud.com/if595c8c3adbe4-05ce-47ae-9f71-e1c84be00db1");
                 defaultImages.add("https://clovachatbot.ncloud.com/ic505b813cf2cd-be8b-401f-8bfc-9619adf9ccd1");
                 defaultImages.add("https://clovachatbot.ncloud.com/i15b5c8b31b316-aa50-493b-8e68-1750c41b7b98");
+                break;
+            case "food":
+                nameType = "線上訂餐";
+                defaultImages.add("https://clovachatbot.ncloud.com/i15e5d863ewa24-4a5a-468b-8f87-a113b0e44fc0");
+                defaultImages.add("https://clovachatbot.ncloud.com/ic54598b3co2f8-d6eb-4786-a957-160e3cc0fae5");
+                defaultImages.add("https://clovachatbot.ncloud.com/i255528938q84e-f28e-4256-b449-78b089640391");
                 break;
         }
 
