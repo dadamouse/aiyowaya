@@ -8,5 +8,7 @@ import com.ai.hackathon.aiyowaya.model.OaListEntity;
 
 public interface OaListRepository extends JpaRepository<OaListEntity, Long> {
 
-    public List<OaListEntity> findAllByIntention(String intention);
+    List<OaListEntity> findAllByIntention(String intention);
+
+    List<OaListEntity> findAllByIntentionAndAd(String intention, long ad);
 }

@@ -54,5 +54,5 @@ public class OaListEntity {
 
     @Basic
     @Column(name = "ad")
-    private String ad;
+    private long ad;
 }

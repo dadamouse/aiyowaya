@@ -23,10 +23,19 @@ public class OaController {
      */
     @PostMapping("/issue")
     public ChatBotDto IssueOa(
-            @RequestBody ChatBotRequest request) {
+            @RequestBody ChatBotRequest request) throws Exception {
 
         System.out.println(request);
 
         return this.oaListService.findIntentOa(request);
+    }
+
+    @PostMapping("/query")
+    public ChatBotDto queryOa(
+            @RequestBody ChatBotRequest request) {
+
+        System.out.println(request);
+
+        return this.oaListService.findIntentOa2(request);
     }
 }
