@@ -31,9 +31,9 @@ public class OaListService {
             chooseName = request.getActionMethod().getName();
         }
 
-        final String nameType;
+        String nameType;
         List<String> defaultImages = new ArrayList<>();
-        final String adImage;
+        String adImage;
         switch (chooseName) {
             case "bank":
             default:
@@ -104,7 +104,10 @@ public class OaListService {
             }
 
             String image;
-            if (isAd || entity.getBg().isEmpty()) {
+            if (isAd) {
+                image = bgImages.get(0);
+            }
+            else if (entity.getBg().isEmpty()) {
                 image = bgImages.get(0);
                 bgImages.remove(0);
             } else {
