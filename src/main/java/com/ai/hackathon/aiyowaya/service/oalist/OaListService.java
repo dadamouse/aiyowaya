@@ -24,34 +24,45 @@ public class OaListService {
 
     public ChatBotDto findIntentOa(ChatBotRequest request) throws Exception {
 
-        String chooseName;
+        final String chooseName;
         if (null == request.getActionMethod().getName() || request.getActionMethod().getName().isEmpty()) {
             chooseName = "bank";
         } else {
             chooseName = request.getActionMethod().getName();
         }
 
-        String nameType;
+        final String nameType;
         List<String> defaultImages = new ArrayList<>();
+        final String adImage;
         switch (chooseName) {
             case "bank":
             default:
                 nameType = "銀行 - 換匯資訊";
                 defaultImages.add("https://clovachatbot.ncloud.com/ic5a568934x4ed-01b2-4f11-82c2-eec3be6a95da");
                 defaultImages.add("https://clovachatbot.ncloud.com/i554558f3dlced-d5c3-4e10-bfee-de6c194efbb7");
-                defaultImages.add("https://clovachatbot.ncloud.com/ia5e588738a034-ef8a-4736-ada9-dd0bb3fdb95a");
+                defaultImages.add("https://clovachatbot.ncloud.com/i15b5c8b31b316-aa50-493b-8e68-1750c41b7b98");
+                adImage = "https://clovachatbot.ncloud.com/i45d578f3dj58f-b66f-4b7a-bc39-be3b71438269";
                 break;
             case "gym":
                 nameType = "預約健身課程";
                 defaultImages.add("https://clovachatbot.ncloud.com/if595c8c3adbe4-05ce-47ae-9f71-e1c84be00db1");
                 defaultImages.add("https://clovachatbot.ncloud.com/ic505b813cf2cd-be8b-401f-8bfc-9619adf9ccd1");
-                defaultImages.add("https://clovachatbot.ncloud.com/i15b5c8b31b316-aa50-493b-8e68-1750c41b7b98");
+                defaultImages.add("https://clovachatbot.ncloud.com/ia5e588738a034-ef8a-4736-ada9-dd0bb3fdb95a");
+                adImage = "https://clovachatbot.ncloud.com/i45e5c8f36ea2f-178a-4175-bbba-581a46bccc1e";
                 break;
             case "food":
                 nameType = "線上訂餐";
                 defaultImages.add("https://clovachatbot.ncloud.com/i15e5d863ewa24-4a5a-468b-8f87-a113b0e44fc0");
                 defaultImages.add("https://clovachatbot.ncloud.com/ic54598b3co2f8-d6eb-4786-a957-160e3cc0fae5");
                 defaultImages.add("https://clovachatbot.ncloud.com/i255528938q84e-f28e-4256-b449-78b089640391");
+                adImage = "https://clovachatbot.ncloud.com/id5e538739ga3f-a3c2-4970-b835-aacb2965348b";
+                break;
+            case "clinic":
+                nameType = "診所 - 預約";
+                defaultImages.add("https://clovachatbot.ncloud.com/id5f578134cae3-321a-4fd7-831e-bdcfa13be600");
+                defaultImages.add("https://clovachatbot.ncloud.com/i056568d3fh9a5-ecf6-4c52-ac9c-b331c3841185");
+                defaultImages.add("https://clovachatbot.ncloud.com/i956598c3cu17d-2b26-4767-8552-bc4f024ef24c");
+                adImage = "https://clovachatbot.ncloud.com/i158578f39h97c-d0d1-406b-83e9-d0b38a68707f";
                 break;
         }
 
@@ -68,13 +79,13 @@ public class OaListService {
         if (oaAdListEntities.isEmpty()) {
             max = 3;
 
-            popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages);
+            popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages, false);
         } else {
-            popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages);
+            popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages, false);
 
             i = 3;
             max = 3;
-            popOaEntity(oaAdListEntities, i, max, chatBotDataList, defaultImages);
+            popOaEntity(oaAdListEntities, i, max, chatBotDataList, List.of(adImage), true);
         }
 
         List<UserVariableResponse> userVariable = new ArrayList();
@@ -85,15 +96,15 @@ public class OaListService {
                          .build();
     }
 
-    private void popOaEntity(List<OaListEntity> oaAdListEntities, int i, int max, List<ChatBotData> chatBotDataList, List<String> bgImages) {
+    private void popOaEntity(List<OaListEntity> oaAdListEntities, int i, int max, List<ChatBotData> chatBotDataList, List<String> bgImages, boolean isAd) {
 
         for (OaListEntity entity : oaAdListEntities) {
             if (i > max) {
                 break;
             }
 
-            String image = "https://clovachatbot.ncloud.com/i35c568331qb3f-e9ee-4cb5-9621-16a7e4fcb198";
-            if (entity.getBg().isEmpty()) {
+            String image;
+            if (isAd || entity.getBg().isEmpty()) {
                 image = bgImages.get(0);
                 bgImages.remove(0);
             } else {
