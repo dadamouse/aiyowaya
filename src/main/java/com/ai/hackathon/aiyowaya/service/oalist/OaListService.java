@@ -41,6 +41,8 @@ public class OaListService {
                 defaultImages.add("https://clovachatbot.ncloud.com/ic5a568934x4ed-01b2-4f11-82c2-eec3be6a95da");
                 defaultImages.add("https://clovachatbot.ncloud.com/i554558f3dlced-d5c3-4e10-bfee-de6c194efbb7");
                 defaultImages.add("https://clovachatbot.ncloud.com/i15b5c8b31b316-aa50-493b-8e68-1750c41b7b98");
+                defaultImages.add("https://clovachatbot.ncloud.com/ic5a568934x4ed-01b2-4f11-82c2-eec3be6a95da");
+                defaultImages.add("https://clovachatbot.ncloud.com/i554558f3dlced-d5c3-4e10-bfee-de6c194efbb7");
                 adImage = "https://clovachatbot.ncloud.com/i45d578f3dj58f-b66f-4b7a-bc39-be3b71438269";
                 break;
             case "gym":
@@ -48,6 +50,8 @@ public class OaListService {
                 defaultImages.add("https://clovachatbot.ncloud.com/if595c8c3adbe4-05ce-47ae-9f71-e1c84be00db1");
                 defaultImages.add("https://clovachatbot.ncloud.com/ic505b813cf2cd-be8b-401f-8bfc-9619adf9ccd1");
                 defaultImages.add("https://clovachatbot.ncloud.com/ia5e588738a034-ef8a-4736-ada9-dd0bb3fdb95a");
+                defaultImages.add("https://clovachatbot.ncloud.com/if595c8c3adbe4-05ce-47ae-9f71-e1c84be00db1");
+                defaultImages.add("https://clovachatbot.ncloud.com/ic505b813cf2cd-be8b-401f-8bfc-9619adf9ccd1");
                 adImage = "https://clovachatbot.ncloud.com/i45e5c8f36ea2f-178a-4175-bbba-581a46bccc1e";
                 break;
             case "food":
@@ -55,6 +59,8 @@ public class OaListService {
                 defaultImages.add("https://clovachatbot.ncloud.com/i15e5d863ewa24-4a5a-468b-8f87-a113b0e44fc0");
                 defaultImages.add("https://clovachatbot.ncloud.com/ic54598b3co2f8-d6eb-4786-a957-160e3cc0fae5");
                 defaultImages.add("https://clovachatbot.ncloud.com/i255528938q84e-f28e-4256-b449-78b089640391");
+                defaultImages.add("https://clovachatbot.ncloud.com/i15e5d863ewa24-4a5a-468b-8f87-a113b0e44fc0");
+                defaultImages.add("https://clovachatbot.ncloud.com/ic54598b3co2f8-d6eb-4786-a957-160e3cc0fae5");
                 adImage = "https://clovachatbot.ncloud.com/id5e538739ga3f-a3c2-4970-b835-aacb2965348b";
                 break;
             case "clinic":
@@ -62,6 +68,8 @@ public class OaListService {
                 defaultImages.add("https://clovachatbot.ncloud.com/id5f578134cae3-321a-4fd7-831e-bdcfa13be600");
                 defaultImages.add("https://clovachatbot.ncloud.com/i056568d3fh9a5-ecf6-4c52-ac9c-b331c3841185");
                 defaultImages.add("https://clovachatbot.ncloud.com/i956598c3cu17d-2b26-4767-8552-bc4f024ef24c");
+                defaultImages.add("https://clovachatbot.ncloud.com/id5f578134cae3-321a-4fd7-831e-bdcfa13be600");
+                defaultImages.add("https://clovachatbot.ncloud.com/i056568d3fh9a5-ecf6-4c52-ac9c-b331c3841185");
                 adImage = "https://clovachatbot.ncloud.com/i158578f39h97c-d0d1-406b-83e9-d0b38a68707f";
                 break;
         }
@@ -77,7 +85,7 @@ public class OaListService {
 
         List<ChatBotData> chatBotDataList = new ArrayList<>();
         if (oaAdListEntities.isEmpty()) {
-            max = 3;
+            max = 5;
 
             popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages, false);
         } else {
@@ -86,6 +94,10 @@ public class OaListService {
             i = 3;
             max = 3;
             popOaEntity(oaAdListEntities, i, max, chatBotDataList, List.of(adImage), true);
+
+            i = 4;
+            max = 5;
+            popOaEntity(oaListEntities, i, max, chatBotDataList, defaultImages, false);
         }
 
         List<UserVariableResponse> userVariable = new ArrayList();
@@ -96,12 +108,17 @@ public class OaListService {
                          .build();
     }
 
-    private void popOaEntity(List<OaListEntity> oaAdListEntities, int i, int max, List<ChatBotData> chatBotDataList, List<String> bgImages, boolean isAd) {
+    private void popOaEntity(List<OaListEntity> entities, int i, int max, List<ChatBotData> chatBotDataList, List<String> bgImages, boolean isAd) {
 
-        for (OaListEntity entity : oaAdListEntities) {
+        System.out.println("i" + i);
+        System.out.println("max" + max);
+
+        while (true) {
             if (i > max) {
                 break;
             }
+
+            OaListEntity entity = entities.get(0);
 
             String image;
             if (isAd) {
@@ -163,6 +180,7 @@ public class OaListService {
                                .build()
             );
 
+            entities.remove(0);
             i++;
         }
     }
