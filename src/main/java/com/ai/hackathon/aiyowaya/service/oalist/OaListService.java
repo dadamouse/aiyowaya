@@ -1,5 +1,6 @@
 package com.ai.hackathon.aiyowaya.service.oalist;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -110,10 +111,7 @@ public class OaListService {
 
     private void popOaEntity(List<OaListEntity> entities, int i, int max, List<ChatBotData> chatBotDataList, List<String> bgImages, boolean isAd) {
 
-        System.out.println("i" + i);
-        System.out.println("max" + max);
-
-        while (true) {
+        while (true && !entities.isEmpty()) {
             if (i > max) {
                 break;
             }
@@ -166,10 +164,11 @@ public class OaListService {
                                .build()
             );
 
+            DecimalFormat df = new DecimalFormat("###,###");
             chatBotDataList.add(
                     ChatBotData.builder()
                                .variableName("friend" + i)
-                               .value(entity.getFriends().toString())
+                               .value(df.format(entity.getFriends()))
                                .build()
             );
 
